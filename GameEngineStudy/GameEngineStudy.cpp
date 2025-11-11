@@ -1073,7 +1073,7 @@ public:
 	}
 	//0 for can pass; 1 for cant pass; 2 for speed up; 3 for speed down
 	int collisionType(GamesEngineeringBase::Window& canvas, Vector2D<float> pos) {
-		if (pos.y > (worldTopLeft.y + 32 * height - 16))				return 1;
+		if (pos.y > (worldTopLeft.y + 32 * height - 32))				return 1;
 		if ((pos.x < (worldTopLeft.x - 16) || pos.x >(worldTopLeft.x + 32 * width - 16))) {
 			if (level == 1)	return 1;
 		}
@@ -1753,16 +1753,16 @@ private:
 				if (playerEntity->playerLevel < 2) {
 					enemyType = 1;
 				}
-				else if (playerEntity->playerLevel < 5) {
+				if (playerEntity->playerLevel >= 2) {
 					enemyType = 2;
 				}
 			}
 			if (level == 2) {
 				if (playerEntity->playerLevel < 2) {
-					enemyType = 2;
-				}
-				else if (playerEntity->playerLevel < 5) {
 					enemyType = 3;
+				}
+				if (playerEntity->playerLevel >= 2) {
+					enemyType = 4;
 				}
 			}
 			
@@ -1972,7 +1972,7 @@ private:
 		else {
 			Draw::drawText(canvas, "LEVEL: " + std::to_string(playerEntity->playerLevel), Vector2D<int>(350, 50), 3, 255, 255, 255);
 		}
-		Draw::drawText(canvas, "SCORE: " + std::to_string(playerEntity->playerScore), Vector2D<int>(650, 20), 3, 255, 255, 255);
+		Draw::drawText(canvas, "SCORE: " + std::to_string(playerEntity->playerScore), Vector2D<int>(600, 20), 3, 255, 255, 255);
 		Draw::drawText(canvas, "MAP: ", Vector2D<int>(620, 40), 3, 255, 255, 255);
 		if (level == 1) {
 			Draw::drawText(canvas, "CITY" , Vector2D<int>(690, 40), 3, 0, 255, 100);
@@ -2211,12 +2211,15 @@ public:
 	}
 	void setLevel(int _level) {
 		level = _level;
+		//world->level = level;
 	}
 	void setPlayer(Player* player) {
 		playerEntity = player;
+		playerEntity->level = level;
 	}
 	void setWorld(World* _world) {
 		world = _world;
+		world->level = level;
 		//world->createWorld();
 		world->createWorld("Resources/Map/mapinfo.txt");
 	}
@@ -2554,7 +2557,7 @@ int main()
 	// Camera effect initialize end
 	//animation initialize
 	Animation ani;
-	unsigned int frameCount = 0;
+	//unsigned int frameCount = 0;
 	// animation initialize end
 	//world initialize
 	World world("Resources/Map");
@@ -2655,7 +2658,7 @@ int main()
 		manager.loadFile(loadTxt);
 		//manager initialize end
 		bool isChoosingWeapon = true;
-		
+		int frameCount = 0;
 		while (isPlaying) {
 			if (frameCount == 20 && !chooseContinue) {//20 choosing weapon
 				while (isChoosingWeapon) {
