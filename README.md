@@ -19,4 +19,6 @@ Game save when quit from pause window.
 ![](https://github.com/Wang-Yuan0813/WarwickStudy_coursework/raw/main/Examples/special.gif)
 # Play dead
 ![](https://github.com/Wang-Yuan0813/WarwickStudy_coursework/raw/main/Examples/dead.gif)
+# 3D simulate background
+![](https://github.com/Wang-Yuan0813/WarwickStudy_coursework/raw/main/Examples/background.gif)
 
